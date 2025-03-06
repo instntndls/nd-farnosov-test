@@ -11,7 +11,9 @@ import TextField from '@/components/TextField/TextField.vue'
 const notesStore = useNotesStore()
 
 const authStore = useAuthStore() // Access the auth store
-const router = useRouter() // Access the router instance
+const router = useRouter()
+
+const fetchNotes = () => notesStore.fetchNotes() // Access the router instance
 
 const isCreateModalOpen = ref(false)
 const errorMessage = ref()
@@ -24,8 +26,8 @@ const handleCreateNote = async () => {
     await notesStore.createNote(newNoteTitle.value, newNoteContent.value)
     newNoteTitle.value = ''
     newNoteContent.value = ''
-    router.push('/')
-    location.reload()
+    await fetchNotes()
+    isCreateModalOpen.value = false
     // Очистка формы
   } catch (error) {
     errorMessage.value = error
