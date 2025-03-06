@@ -19,10 +19,11 @@ const buttonClass = computed(() => [
 
 <template>
   <button :class="buttonClass" :disabled="disabled" @click="emit('click')">
-    <img v-if="icon" :src="`/nd-farnosov-test${icon}`" alt="icon" class="icon" />
+    <slot class="icon" ></slot>
     <p v-if="label" style="" class="text-normal">
       {{ label }}
     </p>
+
   </button>
 </template>
 

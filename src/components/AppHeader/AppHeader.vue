@@ -19,10 +19,11 @@
     <Button
       v-else
       label="Вход"
-      icon="/src/assets/icons/login.svg"
       @click="isLoginModalOpen = true"
       aria-label="Login"
-    />
+    >
+      <img src="/src/assets/icons/login.svg" alt="User"/>
+    </Button>
   </header>
 
   <!-- Модальное окно для входа -->
