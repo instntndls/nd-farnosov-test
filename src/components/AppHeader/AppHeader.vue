@@ -1,6 +1,6 @@
 <template>
   <header class="app-header" role="banner">
-    <img src="@/assets/icons/logo.svg" alt="Logo" class="logo" />
+    <img src="/src/assets/icons/logo.svg" alt="Logo" class="logo" />
 
     <nav v-if="isAuthenticated" class="app-header__nav" aria-label="User Navigation">
       <span class="email-text" aria-live="polite">{{ userEmail }}</span>
