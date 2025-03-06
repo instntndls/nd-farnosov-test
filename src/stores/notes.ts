@@ -59,7 +59,7 @@ export const useNotesStore = defineStore('notes', {
           },
         )
         this.notes.push(response.data) // Добавляем новую заметку в state
-      } catch (error) {
+      } catch (error:any) {
         throw error.response.data.message[0] + ' и ' + error.response.data.message[1]
       }
     },

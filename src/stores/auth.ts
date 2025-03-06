@@ -17,7 +17,9 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await api.post('/auth', { email, password })
         this.token = response.data.accessToken
-        localStorage.setItem('token', this.token)
+        if (this.token) {
+          localStorage.setItem('token', this.token)
+        }
         return { success: true }
       } catch (error) {
         return { success: false, message: 'Неверный логин или пароль' }
@@ -72,8 +74,8 @@ export const useAuthStore = defineStore('auth', {
         if (response.status === 200) {
           return { success: true }
         }
-      } catch (error) {
-        return { success: false, message: error.response?.data?.message || 'Ошибка регистрации' }
+      } catch (error: any) {
+        return { success: false, message: error?.response?.data?.message || 'Ошибка регистрации' }
       }
     },
   },

@@ -120,7 +120,7 @@ const isRegisterModalOpen = ref(false)
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const errorMessage = ref('')
+const errorMessage = ref()
 
 const authStore = useAuthStore()
 const isAuthenticated = ref(false)
@@ -139,7 +139,7 @@ const login = async () => {
     isAuthenticated.value = await authStore.isAuthenticated
     location.reload()
   } else {
-    errorMessage.value = result.message
+    errorMessage.value = result?.message
   }
 }
 
@@ -151,12 +151,13 @@ const register = async () => {
 
   try {
     const result = await authStore.register(email.value, password.value)
-    if (result.success) {
+    if (result?.success) {
       isRegisterModalOpen.value = false
       isLoginModalOpen.value = true
       errorMessage.value = ''
+
     } else {
-      errorMessage.value = result.message.toString().replace(/[\[\]"']/g, '')
+      errorMessage.value = result?.message.toString().replace(/[\[\]"']/g, '')
     }
   } catch (error) {
     console.error(error)

@@ -14,7 +14,7 @@ const authStore = useAuthStore() // Access the auth store
 const router = useRouter() // Access the router instance
 
 const isCreateModalOpen = ref(false)
-const errorMessage = ref('')
+const errorMessage = ref()
 
 const newNoteTitle = ref('')
 const newNoteContent = ref('')

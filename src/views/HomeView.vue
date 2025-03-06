@@ -5,7 +5,7 @@ import { useNotesStore } from '@/stores/notes.ts'
 
 const notesStore = useNotesStore()
 
-const notes = ref([])
+const notes = ref()
 
 onMounted(async () => {
   await handleFetchNotes()
