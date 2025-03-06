@@ -1,15 +1,20 @@
 <template>
-  <div class="about">
+  <div class="about" role="main" aria-labelledby="about-title">
     <div class="text-block">
-      <h1>Мои заметки</h1>
+      <h1 id="about-title">Мои заметки</h1>
       <h3>Не забывай о важном, храни его в облаке.</h3>
     </div>
-    <img src="/src/assets/icons/group.svg" style="display: block; margin: 0 auto" alt="group" class="group" />
+    <img
+      src="/src/assets/icons/group.svg"
+      alt="group"
+      class="group"
+      loading="lazy"
+      aria-hidden="true"
+    />
   </div>
 </template>
 
 <style>
-
 @media (max-width: 600px) {
   .about h1 {
     width: 80%;
@@ -81,7 +86,6 @@
     font-size: 104px;
     line-height: 104px;
     letter-spacing: 0%;
-
   }
   .about h3 {
     width: 60%;
@@ -107,5 +111,4 @@
   }
 }
 </style>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

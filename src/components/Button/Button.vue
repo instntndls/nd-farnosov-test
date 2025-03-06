@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
 interface Props {
-  label?: string;
-  icon?: string;
-  round?: boolean;
-  disabled?: boolean;
+  label?: string
+  icon?: string
+  round?: boolean
+  disabled?: boolean
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(["click"]);
+const props = defineProps<Props>()
+const emit = defineEmits(['click'])
 
 const buttonClass = computed(() => [
-  "base-button",
-  { round: props.round, disabled: props.disabled }
-]);
+  'base-button',
+  { round: props.round, disabled: props.disabled },
+])
 </script>
 
 <template>
@@ -62,5 +62,4 @@ const buttonClass = computed(() => [
   background: var(--color-gray);
   cursor: not-allowed;
 }
-
 </style>

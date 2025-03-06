@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue'
 
 interface Props {
-  label?: string;
-  placeholder?: string;
-  modelValue: string;
-  maxlength?: number;
-  errorMessage?: string;
-  isPassword?: boolean;
+  label?: string
+  placeholder?: string
+  modelValue: string
+  maxlength?: number
+  errorMessage?: string
+  isPassword?: boolean
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(["update:modelValue"]);
+const props = defineProps<Props>()
+const emit = defineEmits(['update:modelValue'])
 
-const inputType = ref(props.isPassword ? "password" : "text");
+const inputType = ref(props.isPassword ? 'password' : 'text')
 const togglePassword = () => {
-  inputType.value = inputType.value === "password" ? "text" : "password";
-};
+  inputType.value = inputType.value === 'password' ? 'text' : 'password'
+}
 
-const charCount = computed(() => props.modelValue.length);
-const isLimitExceeded = computed(() => props.maxlength && charCount.value >= props.maxlength);
+const charCount = computed(() => props.modelValue.length)
+const isLimitExceeded = computed(() => props.maxlength && charCount.value >= props.maxlength)
 </script>
 
 <template>
   <div class="input-container" :class="{ error: errorMessage }">
-    <label v-if="label" style="padding: 0 24px; color: var(--color-gray)" class="text-small">{{ label }}</label>
+    <label v-if="label" style="padding: 0 24px; color: var(--color-gray)" class="text-small">{{
+      label
+    }}</label>
     <div class="input-wrapper">
       <input
         :type="inputType"
@@ -46,13 +48,23 @@ const isLimitExceeded = computed(() => props.maxlength && charCount.value >= pro
         "
       />
       <button v-if="isPassword" type="button" class="toggle-password" @click="togglePassword">
-        <img v-if="inputType !== 'text'" src="/src/assets/icons/off-password.svg" alt="logo" class="logo">
-        <img v-else src="/src/assets/icons/on-password.svg" alt="logo" class="logo">
+        <img
+          v-if="inputType !== 'text'"
+          src="/src/assets/icons/off-password.svg"
+          alt="logo"
+          class="logo"
+        />
+        <img v-else src="/src/assets/icons/on-password.svg" alt="logo" class="logo" />
       </button>
     </div>
-    <div class="input-meta" >
-      <span v-if="errorMessage" style="color: #FF7461" class="text-small">{{ errorMessage }}</span>
-      <span v-if="maxlength" class="text-small" :style="{ color: isLimitExceeded ? '#FF7461' : '' }" style="margin-left: auto;">
+    <div class="input-meta">
+      <span v-if="errorMessage" style="color: #ff7461" class="text-small">{{ errorMessage }}</span>
+      <span
+        v-if="maxlength"
+        class="text-small"
+        :style="{ color: isLimitExceeded ? '#FF7461' : '' }"
+        style="margin-left: auto"
+      >
         {{ charCount }}/{{ maxlength }}
       </span>
     </div>
@@ -121,6 +133,6 @@ const isLimitExceeded = computed(() => props.maxlength && charCount.value >= pro
 }
 
 .input-container.error .input-field {
-  border-color: #FF7461;
+  border-color: #ff7461;
 }
 </style>

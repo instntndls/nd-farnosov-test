@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
-import Button from "@/components/Button/Button.vue";
+import { onMounted, onUnmounted } from 'vue'
+import Button from '@/components/Button/Button.vue'
 
 interface Props {
-  title?: string;
-  isOpen: boolean;
-  errorMessage?: string;
+  title?: string
+  isOpen: boolean
+  errorMessage?: string
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(["close"]);
+const props = defineProps<Props>()
+const emit = defineEmits(['close'])
 
 const handleEscape = (event: KeyboardEvent) => {
-  if (event.key === "Escape") {
-    emit("close");
+  if (event.key === 'Escape') {
+    emit('close')
   }
-};
+}
 
 onMounted(() => {
-  document.addEventListener("keydown", handleEscape);
-});
+  document.addEventListener('keydown', handleEscape)
+})
 
 onUnmounted(() => {
-  document.removeEventListener("keydown", handleEscape);
-});
+  document.removeEventListener('keydown', handleEscape)
+})
 </script>
 
 <template>
@@ -97,7 +97,7 @@ onUnmounted(() => {
 }
 
 .error-message {
-  color: #FF7461;
+  color: #ff7461;
   background: rgba(255, 116, 97, 0.1);
   padding: 8px 20px;
   border-radius: 24px;
@@ -115,10 +115,9 @@ onUnmounted(() => {
   }
 }
 
-
 @media (max-width: 1000px) {
   .modal-content {
-    padding: 2vh 0 4vh 4vw;
+    padding: 0 4vw 4vh 4vw;
   }
   .modal-header h2 {
     width: 70%;
@@ -131,7 +130,6 @@ onUnmounted(() => {
     width: 90vw;
   }
 }
-
 
 @keyframes scale-in {
   from {

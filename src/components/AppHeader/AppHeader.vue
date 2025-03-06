@@ -1,17 +1,18 @@
 <template>
-  <header class="app-header">
-    <img src="/src/assets/icons/logo.svg" alt="logo" class="logo" />
+  <header class="app-header" role="banner">
+    <img src="/src/assets/icons/logo.svg" alt="Logo" class="logo" />
 
-    <nav v-if="isAuthenticated" class="app-header__nav">
-      <span class="email-text">{{ userEmail }}</span>
+    <nav v-if="isAuthenticated" class="app-header__nav" aria-label="User Navigation">
+      <span class="email-text" aria-live="polite">{{ userEmail }}</span>
       <Button
         style="height: 56px; width: 56px; background: var(--color-middle)"
         round
         icon="/src/assets/icons/user.svg"
         @click="toggleDropdown"
+        aria-label="User Menu"
       />
-      <div v-if="isDropdownOpen" class="dropdown">
-        <a @click="logout">Выйти</a>
+      <div v-if="isDropdownOpen" class="dropdown" role="menu">
+        <a @click="logout" role="menuitem">Выйти</a>
       </div>
     </nav>
 
@@ -20,6 +21,7 @@
       label="Вход"
       icon="/src/assets/icons/login.svg"
       @click="isLoginModalOpen = true"
+      aria-label="Login"
     />
   </header>
 
@@ -29,25 +31,30 @@
     :isOpen="isLoginModalOpen"
     title="Вход в ваш аккаунт"
     @close="isLoginModalOpen = false"
+    role="dialog"
+    aria-labelledby="login-dialog-title"
   >
-    <Input
-      v-model="email"
-      label="Email"
-      placeholder="Введите email"
-      errorMessage=""
-    />
+    <Input v-model="email" label="Email" placeholder="Введите email" errorMessage="" aria-required="true" />
     <Input
       v-model="password"
       is-password
       label="Пароль"
       placeholder="Введите пароль"
       errorMessage=""
+      aria-required="true"
     />
     <div class="modal-footer">
-      <Button class="modal-btn" label="Войти" @click="login" />
+      <Button class="modal-btn" label="Войти" @click="login" aria-label="Submit Login" />
       <div class="modal-footer-text">
         <p class="text-small">У вас нет аккаунта?</p>
-        <a @click="isRegisterModalOpen = true; isLoginModalOpen = false; errorMessage = ''">
+        <a
+          @click="
+            isRegisterModalOpen = true;
+            isLoginModalOpen = false;
+            errorMessage = ''
+          "
+          role="button"
+        >
           Зарегистрируйтесь
         </a>
       </div>
@@ -60,19 +67,17 @@
     :isOpen="isRegisterModalOpen"
     title="Регистрация"
     @close="isRegisterModalOpen = false"
+    role="dialog"
+    aria-labelledby="register-dialog-title"
   >
-    <Input
-      v-model="email"
-      label="Email"
-      placeholder="Введите email"
-      errorMessage=""
-    />
+    <Input v-model="email" label="Email" placeholder="Введите email" errorMessage="" aria-required="true" />
     <Input
       v-model="password"
       is-password
       label="Пароль"
       placeholder="Ввведите пароль"
       errorMessage=""
+      aria-required="true"
     />
     <Input
       v-model="confirmPassword"
@@ -80,12 +85,20 @@
       label="Пароль еще раз"
       placeholder="Ввведите пароль"
       errorMessage=""
+      aria-required="true"
     />
     <div class="modal-footer">
-      <Button class="modal-btn" label="Зарегистрироваться" @click="register" />
+      <Button class="modal-btn" label="Зарегистрироваться" @click="register" aria-label="Submit Registration" />
       <div class="modal-footer-text">
         <p class="text-small">У вас есть аккаунт?</p>
-        <a @click="isLoginModalOpen = true; isRegisterModalOpen = false; errorMessage = ''">
+        <a
+          @click="
+            isLoginModalOpen = true;
+            isRegisterModalOpen = false;
+            errorMessage = ''
+          "
+          role="button"
+        >
           Войдите
         </a>
       </div>
@@ -94,92 +107,86 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useAuthStore } from '@/stores/auth';
-import Button from '@/components/Button/Button.vue';
-import Input from '@/components/Input/Input.vue';
-import ModalWindow from '@/components/ModalWindow/ModalWindow.vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import Button from '@/components/Button/Button.vue'
+import Input from '@/components/Input/Input.vue'
+import ModalWindow from '@/components/ModalWindow/ModalWindow.vue'
+import { useRouter } from 'vue-router'
 
-const isDropdownOpen = ref(false);
-const isLoginModalOpen = ref(false);
-const isRegisterModalOpen = ref(false); // Флаг для регистрации
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
-const errorMessage = ref('');
+const isDropdownOpen = ref(false)
+const isLoginModalOpen = ref(false)
+const isRegisterModalOpen = ref(false)
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const errorMessage = ref('')
 
-const authStore = useAuthStore();
-const isAuthenticated = ref(false);
-const userEmail = ref('');
-const router = useRouter();
+const authStore = useAuthStore()
+const isAuthenticated = ref(false)
+const userEmail = ref('')
+const router = useRouter()
 
-// Функция для переключения выпадающего меню
 const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
+  isDropdownOpen.value = !isDropdownOpen.value
+}
 
-// Функция для входа
 const login = async () => {
-  const result = await authStore.login(email.value, password.value);
+  const result = await authStore.login(email.value, password.value)
 
   if (result.success) {
-    isLoginModalOpen.value = false;
-    router.push('/app');
-    isAuthenticated.value = authStore.isAuthenticated;
+    isLoginModalOpen.value = false
+    isAuthenticated.value = await authStore.isAuthenticated
+    location.reload()
   } else {
-    errorMessage.value = result.message;
+    errorMessage.value = result.message
   }
-};
+}
 
-// Функция для регистрации
 const register = async () => {
   if (password.value !== confirmPassword.value) {
-    errorMessage.value = 'Пароли не совпадают';
-    return;
+    errorMessage.value = 'Пароли не совпадают'
+    return
   }
 
   try {
-    const result = await authStore.register(email.value, password.value);
+    const result = await authStore.register(email.value, password.value)
     if (result.success) {
-      // После регистрации автоматически открываем окно входа
-      isRegisterModalOpen.value = false;
-      isLoginModalOpen.value = true;
-      errorMessage.value = '';
+      isRegisterModalOpen.value = false
+      isLoginModalOpen.value = true
+      errorMessage.value = ''
     } else {
-      errorMessage.value = result.message.toString().replace(/[\[\]"']/g, '');
+      errorMessage.value = result.message.toString().replace(/[\[\]"']/g, '')
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
-// Функция для выхода
 const logout = async () => {
-  await authStore.logout();
-  isAuthenticated.value = authStore.isAuthenticated;
-  router.push('/');
-  isDropdownOpen.value = false;
-};
+  await authStore.logout()
+  isAuthenticated.value = authStore.isAuthenticated
+  router.push('/')
+  isDropdownOpen.value = false
+}
 
 onMounted(async () => {
-  isAuthenticated.value = authStore.isAuthenticated;
+  isAuthenticated.value = authStore.isAuthenticated
   if (isAuthenticated.value) {
     try {
-      const user = await authStore.fetchUserInfo();
-      userEmail.value = user?.email || '';
+      const user = await authStore.fetchUserInfo()
+      userEmail.value = user?.email || ''
     } catch (error) {
-      console.error('Ошибка при загрузке информации о пользователе', error);
+      console.error('Ошибка при загрузке информации о пользователе', error)
     }
   }
 
-  // Наблюдатель за роутами
   router.afterEach((to) => {
     if (to.path === '/app' && !isAuthenticated.value) {
-      router.push('/');
+      router.push('/')
     }
-  });
-});
+  })
+})
 </script>
 
 <style scoped>
@@ -231,10 +238,11 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 50;
 }
 
 .dropdown::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -10px;
   right: 20px;
@@ -273,6 +281,9 @@ onMounted(async () => {
 
 /* Для экранов до 768px меняем расположение: кнопка над текстом */
 @media (max-width: 640px) {
+  .app-header {
+    overflow: hidden;
+  }
   .email-text {
     visibility: hidden;
     width: 0;
@@ -312,6 +323,7 @@ onMounted(async () => {
   }
 
   .modal-footer {
+    margin-top: 14px;
     flex-direction: row-reverse;
     align-items: stretch;
   }
