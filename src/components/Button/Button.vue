@@ -20,7 +20,7 @@ const buttonClass = computed(() => [
 <template>
   <button :class="buttonClass" :disabled="disabled" @click="emit('click')">
     <img v-if="icon" :src="icon" alt="icon" class="icon" />
-    <p v-if="label" class="text-normal">
+    <p v-if="label" style="" class="text-normal">
       {{ label }}
     </p>
   </button>
@@ -31,7 +31,7 @@ const buttonClass = computed(() => [
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   height: 56px;
   padding: 0 24px;
   background: var(--color-green-light);
