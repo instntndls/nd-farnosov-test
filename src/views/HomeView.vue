@@ -54,6 +54,7 @@ header {
   gap: 24px;
 }
 .card-grid {
+  padding: 20px 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;

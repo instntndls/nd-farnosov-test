@@ -5,12 +5,13 @@
     <nav v-if="isAuthenticated" class="app-header__nav" aria-label="User Navigation">
       <span class="email-text" aria-live="polite">{{ userEmail }}</span>
       <Button
-        style="height: 56px; width: 56px; background: var(--color-middle)"
+        class="user-button"
+        style="background: var(--color-middle)"
         round
         @click="toggleDropdown"
         aria-label="User Menu"
       >
-        <img src="/src/assets/icons/user.svg" alt="User" />
+        <img src="/src/assets/icons/user.svg" class="icon" alt="User" />
       </Button>
       <div v-if="isDropdownOpen" class="dropdown" role="menu">
         <a @click="logout" role="menuitem">Выйти</a>
@@ -282,13 +283,20 @@ onMounted(async () => {
   font-size: 16px;
 }
 
-/* Для экранов до 768px меняем расположение: кнопка над текстом */
 @media (max-width: 640px) {
   .app-header {
-    overflow: hidden;
+    width: 100%;
+  }
+  .user-button {
+    padding: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .user-button img {
+    height: 18px !important;
   }
   .email-text {
-    visibility: hidden;
+    font-size: 0;
     width: 0;
     padding: 0;
     margin: 0;
@@ -321,6 +329,10 @@ onMounted(async () => {
 }
 
 @media (min-width: 640px) {
+  .user-button {
+    height: 56px;
+    width: 56px;
+  }
   .modal-footer-text {
     width: 100%;
   }

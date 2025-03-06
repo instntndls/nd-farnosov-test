@@ -16,8 +16,12 @@
 
 <style>
 @media (max-width: 600px) {
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .about h1 {
-    width: 80%;
     margin: 0;
     text-align: center;
     font-size: 60px;
@@ -43,6 +47,11 @@
 }
 
 @media (min-width: 600px) {
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .about h1 {
     width: 80%;
     margin: 0;
