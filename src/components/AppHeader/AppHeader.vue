@@ -7,10 +7,11 @@
       <Button
         style="height: 56px; width: 56px; background: var(--color-middle)"
         round
-        icon="/src/assets/icons/user.svg"
         @click="toggleDropdown"
         aria-label="User Menu"
-      />
+      >
+        <img src="/src/assets/icons/user.svg" alt="User" />
+      </Button>
       <div v-if="isDropdownOpen" class="dropdown" role="menu">
         <a @click="logout" role="menuitem">Выйти</a>
       </div>

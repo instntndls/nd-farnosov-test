@@ -24,6 +24,7 @@ const handleCreateNote = async () => {
     await notesStore.createNote(newNoteTitle.value, newNoteContent.value)
     newNoteTitle.value = ''
     newNoteContent.value = ''
+    router.push('/')
     location.reload()
     // Очистка формы
   } catch (error) {
@@ -53,9 +54,10 @@ onMounted(() => {
     class="add-button"
     @click="isCreateModalOpen = true"
     round
-    icon="/src/assets/icons/add.svg"
     aria-label="Add note"
-  />
+  >
+    <img src="/src/assets/icons/add.svg" alt="Add">
+  </Button>
 
   <ModalWindow
     :error-message="errorMessage"

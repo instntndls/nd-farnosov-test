@@ -39,8 +39,9 @@ onUnmounted(() => {
             label=""
             @click="emit('close')"
             round
-            icon="/src/assets/icons/close.svg"
-          />
+          >
+            <img src="/src/assets/icons/close.svg" alt="close" />
+          </Button>
         </div>
         <div class="modal-body">
           <slot></slot>
