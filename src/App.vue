@@ -8,6 +8,8 @@ import Input from '@/components/Input/Input.vue'
 import ModalWindow from '@/components/ModalWindow/ModalWindow.vue'
 import { useNotesStore } from '@/stores/notes.ts'
 import TextField from '@/components/TextField/TextField.vue'
+import Landing from '@/views/Landing.vue'
+import HomeView from '@/views/HomeView.vue'
 const notesStore = useNotesStore()
 
 const authStore = useAuthStore() // Access the auth store
@@ -35,20 +37,15 @@ const handleCreateNote = async () => {
 }
 
 onMounted(() => {
-  // Check if the user is authenticated
-  if (authStore.isAuthenticated) {
-    // Redirect to /app if the user is authenticated
-    router.push('/app')
-  } else {
-    router.push('/')
-  }
+
 })
 </script>
 
 <template>
   <div class="app" role="main">
     <AppHeader />
-    <RouterView />
+    <Landing v-if="!authStore.isAuthenticated"/>
+    <HomeView v-else/>
   </div>
 
   <Button
